@@ -49,7 +49,7 @@ class Interfaz {
             }, 3000);
         }
         // Inserta los gastos a la lista
-    agregarGastoListado(nombre, cantidad) {
+    agregarGastoListado(nombre, cantidad, dia) {
             const gastosListado = document.querySelector('#gastos ul');
 
             // Crear un li
@@ -57,6 +57,7 @@ class Interfaz {
             li.className = 'list-group-item d-flex justify-content-between align-items-center';
             // Insertar el gasto
             li.innerHTML = `
+            <span class="lead text-info text-capitalize font-italic">${dia}</span>
             ${nombre}:
             <span class="badge badge-primary badge-pill">$ ${cantidad}</span>
         `;
@@ -114,18 +115,20 @@ formulario.addEventListener('submit', function(e) {
     // Leer del formulario de gastos
     const nombreGasto = document.querySelector('#gasto').value;
     const cantidadGasto = document.querySelector('#cantidad').value;
+    // Agrego el dia de la semana
+    const diaGasto = document.querySelector('#dia').value;
 
     // Instanciar la Interfaz
     const ui = new Interfaz();
 
     // Validar los campos
-    if (nombreGasto === '' || cantidadGasto === '' || cantidadGasto != Number(cantidadGasto)) {
+    if (nombreGasto === '' || cantidadGasto === '' || cantidadGasto != Number(cantidadGasto) || diaGasto === '') {
         // 2 parametros: mensaje y tipo
         ui.imprimirMensaje('Hubo un error', 'error');
     } else {
         // Insertar en el HTML
         ui.imprimirMensaje('Gasto agregado', 'correcto');
-        ui.agregarGastoListado(nombreGasto, cantidadGasto);
+        ui.agregarGastoListado(nombreGasto, cantidadGasto, diaGasto);
         ui.presupuestoRestante(cantidadGasto);
     }
 });
